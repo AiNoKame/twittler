@@ -4,16 +4,17 @@
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
     <style>
-      body {background-color: #009999;
-        float: left;}
+      body {background-color: #009999;}
       div {background-color: #FFFFFF;
         color: #000000;
         font-family: 'optima';
         font-size: 20px;
         padding: 10px;
-        margin: 10px;
+        margin: 5px;
         border-style: solid;
-        border-radius: 100px;}
+        border-radius: 100px;
+        width: 80%;
+        float: left;}
     </style>
   </head>
   <body>
@@ -30,18 +31,23 @@
       $(document).ready(function(){
         var $body = $('body');
         $body.html('');
-
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + 
-            " (" + months[tweet.created_at.getMonth()] + " " + tweet.created_at.getDate() + ", " + tweet.created_at.getFullYear() +
-            " | " + tweet.created_at.getHours() + ":" + tweet.created_at.getMinutes() + ":" + pad(tweet.created_at.getSeconds()) + ")");
-          $tweet.appendTo($body);
-          index -= 1;
-        }
-
+        
+        var displayTweets = function () {
+          $('body').empty();
+          var index = streams.home.length - 1;
+          while(index >= 0){
+            var tweet = streams.home[index];
+            var $tweet = $('<div></div>');
+            $tweet.text('@' + tweet.user + ': ' + tweet.message + 
+              " (" + months[tweet.created_at.getMonth()] + " " + tweet.created_at.getDate() + ", " + tweet.created_at.getFullYear() +
+              " | " + pad(tweet.created_at.getHours()) + ":" + pad(tweet.created_at.getMinutes()) + ":" + pad(tweet.created_at.getSeconds()) + ")");
+            $tweet.appendTo($body);
+            index -= 1;
+          };
+        };
+        
+        displayTweets();
+        setInterval(displayTweets, 6500);
       });
 
     </script>
