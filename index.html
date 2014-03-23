@@ -13,7 +13,7 @@
         margin-bottom: 10px;
         border-style: solid;
         border-radius: 10px;
-        width: 15%;}
+        width: 150px;}
       .buttonText {text-decoration: none;
         color: #FFFFFF;
         font-size: 16px;
@@ -28,6 +28,8 @@
         border-radius: 10px;
         width: 80%;
         float: left;}
+      .nameText:link {color: #990000;}
+      .nameText:visited {color: #996600;}
     </style>
     <title>Twittler</title>
   </head>
@@ -49,25 +51,33 @@
         var $tweetBed = $('<div></div>');
         $tweetBed.appendTo($body);
 
-        var displayTweets = function () {
+        var displayTweets = function (stream) {
           $tweetBed.empty();
 
-          for (var i = streams.home.length - 1; i > 0; i--) {
-            var tweet = streams.home[i];
+          for (var i = stream.length - 1; i > 0; i--) {
+            var tweet = stream[i];
             var $tweet = $('<div class="tweet"></div>');
-            $tweet.text('@' + tweet.user + ': ' + tweet.message + 
+            var $userLink = $('<a href=# class="nameText" id=' + tweet.user + '>@' + tweet.user + '</a>');
+            $userLink.appendTo($tweet);
+
+            $tweet.append(': ' + tweet.message + 
               " (" + months[tweet.created_at.getMonth()] + " " + tweet.created_at.getDate() + ", " + tweet.created_at.getFullYear() +
               " | " + pad(tweet.created_at.getHours()) + ":" + pad(tweet.created_at.getMinutes()) + ":" + pad(tweet.created_at.getSeconds()) + ")");
             $tweet.appendTo($tweetBed);
           };
+
+          $('.nameText').on('click', function() {
+            var id = this.id;
+          
+            displayTweets(streams.users[id]);
+          });
         };
         
         $('.buttonText').on('click', function() {
-          displayTweets();
+          displayTweets(streams.home);
         });
 
-        displayTweets();
-        //setInterval(displayTweets, 6500);
+        displayTweets(streams.home);
       });
 
     </script>
