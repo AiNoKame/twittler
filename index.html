@@ -47,7 +47,6 @@
       $(document).ready(function(){
         var $body = $('body');
         var $tweetBed = $('<div></div>');
-        
         $tweetBed.appendTo($body);
 
         var displayTweets = function () {
@@ -63,8 +62,12 @@
           };
         };
         
+        $('.buttonText').on('click', function() {
+          displayTweets();
+        });
+
         displayTweets();
-        setInterval(displayTweets, 6500);
+        //setInterval(displayTweets, 6500);
       });
 
     </script>
