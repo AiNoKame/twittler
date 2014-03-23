@@ -34,15 +34,13 @@
         
         var displayTweets = function () {
           $('body').empty();
-          var index = streams.home.length - 1;
-          while(index >= 0){
-            var tweet = streams.home[index];
+          for (var i = streams.home.length - 1; i > 0; i--) {
+            var tweet = streams.home[i];
             var $tweet = $('<div></div>');
             $tweet.text('@' + tweet.user + ': ' + tweet.message + 
               " (" + months[tweet.created_at.getMonth()] + " " + tweet.created_at.getDate() + ", " + tweet.created_at.getFullYear() +
               " | " + pad(tweet.created_at.getHours()) + ":" + pad(tweet.created_at.getMinutes()) + ":" + pad(tweet.created_at.getSeconds()) + ")");
             $tweet.appendTo($body);
-            index -= 1;
           };
         };
         
